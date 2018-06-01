@@ -24,7 +24,7 @@
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ligadeamericano", "root", "root");
             Statement st = con.createStatement();
             String sql = "SELECT nombreEquipo, partidosGanados, partidosPerdidos, partidosEmpatados "
-                    + "FROM RecordDeEquipo WHERE temporada like '2017' and nombreEquipo like 'kansas %'";
+                    + "FROM RecordDeEquipo WHERE temporada like '2017' and nombreEquipo like 'Burros %'";
             ResultSet rs = st.executeQuery(sql);
             
             DefaultCategoryDataset data = new DefaultCategoryDataset();

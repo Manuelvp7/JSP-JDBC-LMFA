@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import com.ipn.mx.Conexiones.Conexion;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
-import org.apache.jasper.tagplugins.jstl.core.Catch;
 
 /**
  * This class provides methods to populate DB Table of Articulo
