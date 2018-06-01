@@ -194,8 +194,11 @@
             <div class="box_1">
                 <img src="images/objetivo.jpg" width=42%>
                 <h3 class="text_2 color_2 maxheight1">Objetivo</h3>
-                <p class="text_3 color_2 maxheight">
-                   Descripción del objetivo 
+                <p class="text_3 color_2 maxheight" align="justify">
+                  Establecemos estándares altos y luchamos continuamente por la excelencia. Todo es posible. 
+                  No importa cuán grandes sean los obstáculos, superamos la adversidad.
+                  Convertimos las pérdidas en lecciones. Nos adaptamos a circunstancias cambiantes y lideramos en nuevos contextos.
+                  Abrazamos los mayores desafíos y nos levantamos para enfrentarlos.
                 </p>
                
             </div>
@@ -204,8 +207,11 @@
             <div class="box_1">
                 <img src="images/mision.jpg" width=40%>
                 <h3 class="text_2 color_2 maxheight1">Visión</h3>
-                <p class="text_3 color_2 maxheight">
-                Descripción de la visión 
+                <p class="text_3 color_2 maxheight" align="justify">   
+                 Hacemos lo correcto cuando nadie está mirando.
+                 Exigimos responsabilidad y esperamos juego limpio.
+                 Decimos lo que queremos decir, significa lo que decimos y siempre cumplimos.
+                 Aceptamos la responsabilidad cuando nos equivocamos y luego trabajamos para corregirlos.
                 </p>
             
             </div>
@@ -214,8 +220,10 @@
             <div class="box_1">
                <img src="images/vision.jpg" width=40%>
                 <h3 class="text_2 color_2 maxheight1">Misión</h3>
-                <p class="text_3 color_2 maxheight">
-                  Descripción de la misión 
+                <p class="text_3 color_2 maxheight" align="justify">
+                  Brindar a todos nuestros seguidores, comunidades y socios 
+                  los deportes y entretenimientos de la más alta calidad en el mundo, 
+                  y hacerlo de manera coherente con nuestros valores.
                 </p>
              
             </div>
@@ -249,7 +257,7 @@
 			<div class="footer-info">
 				<div class="col-md-4 footer-grids wow fadeInUp animated" data-wow-delay=".5s">
 					<h1><a href="index.jsp" id="logo">LIGA</a> </a></h1>
-					<p>© 2018 Lida de Futbol Americano</p>
+					<p>© 2018 Liga de Futbol Americano</p>
 				</div>
 				<div class="col-md-4 footer-grids wow fadeInUp animated" data-wow-delay=".7s">
 					<h3>Popular</h3>
