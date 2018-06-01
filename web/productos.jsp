@@ -212,10 +212,7 @@
                 </div>
             </div>                             
             <%
-                        i++;
-                        if (i > 3) {
-                            break;
-                        }
+                
                     }
                 } catch (Exception e) {
 
@@ -459,38 +456,7 @@
                     </div>
                 </div>
             </div>
-            <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".9s">
-                <div class="new-top1">
-                    <?php
-                    //Include database configuration file
-                    include('dbConfig.php');
-
-                    //get images from database
-                    $query9= $db->query("SELECT *  FROM productos where id=9");
-                    if($query9->num_rows>0){
-                    while($row = $query9->fetch_assoc()){
-                    $imageThumbURL = 'images/'.$row["imagen"];
-                    $imageURL = 'images/'.$row["imagen"];
-                    $nombrep =$row["nombre"];
-                    $preciop =$row["precio"];
-                    ?>
-                    <a href="<?php echo $imageURL; ?>"  ><img src="<?php echo $imageThumbURL; ?>" class="img-responsive" alt=""/></a>  <?php }
-                    } ?>
-                    <div class="new-text">
-                        <ul>
-                            <li><a href="single.html">Vista rapida</a></li>
-
-                        </ul>
-                    </div>
-                </div>
-                <div class="new-bottom">
-                    <h5><a class="name" href="single.html"><?php echo $nombrep; ?></a></h5>
-                    <div class="ofr">
-
-                        <p><span class="item_price"><?php echo $preciop; ?></span></p>
-                    </div>
-                </div>
-            </div>
+            
 
         </div>
 

@@ -4,7 +4,6 @@
  * For more information, please contact b-i-d@163.com
  * Please check http://sourceforge.net/projects/dao4j/ for the latest version.
  */
-
 package com.ipn.mx.DAO;
 
 import com.ipn.mx.Modelo.*;
@@ -23,124 +22,108 @@ import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 import org.apache.jasper.tagplugins.jstl.core.Catch;
 
-
 /**
  * This class provides methods to populate DB Table of Articulo
  */
 public class ArticuloDAOImpl {
+
     /* SQL to insert data */
-    private static final String SQL_INSERT =
-        "INSERT INTO Articulo ("
-        + "categoria, proveedor, nombre, precio"
-        + ") VALUES (?, ?, ?, ?)";
+    private static final String SQL_INSERT
+            = "INSERT INTO Articulo ("
+            + "categoria, proveedor, nombre, precio"
+            + ") VALUES (?, ?, ?, ?)";
 
     /* SQL to select data */
-    
-    
-    private static final String SQL_SELECT_ARTICULOS=
-            
-            "insert into articulo values( 'Productos importados','Virtu Financial, Inc.','GORRAJAJAJA',397.80,'jersey.jpg',500 ) ";
-            //+ "categoria,proveedor,nombre,precio,imagen,existencias"
-   //         + " FROM Articulo ";
-    
-    private static final String SQL_SELECT_ARTICULOS_EN_TIENDA=
-            
-            "select "
+    private static final String SQL_SELECT_ARTICULOS
+            = //"insert into articulo values( 'Productos importados','Virtu Financial, Inc.','GORRAJAJAJA',397.80,'jersey.jpg',500 ) ";
+            " select categoria,proveedor,nombre,precio,imagen,existencias"
+            + " FROM Articulo ";
+
+    private static final String SQL_SELECT_ARTICULOS_EN_TIENDA
+            = "select "
             + "nombre,categoria,precio,proveedor,precio,existencias"
             + " FROM Articulo INNE JOIN TiendaTieneArticulo"
             + " ON nombre = nombreArticulo AND proveedor = nombreProveedor "
             + "Where nombreTienda = ?";
-           
-        
-    private static final String SQL_SELECT_ARTICULOS_EN_TIENDA_POR_PROVEEDOR=
-            
-            "select "
+
+    private static final String SQL_SELECT_ARTICULOS_EN_TIENDA_POR_PROVEEDOR
+            = "select "
             + "nombre,categoria,precio,proveedor,precio,existencias"
             + " FROM Articulo INNE JOIN TiendaTieneArticulo"
             + " ON nombre = nombreArticulo AND proveedor = nombreProveedor "
             + "Where nombreTienda = ? "
             + "AND proveedor = ?";
-    
-        private static final String SQL_SELECT_ARTICULOS_EN_TIENDA_POR_NOMBRE_ARTICULO=
-            
-            "select "
+
+    private static final String SQL_SELECT_ARTICULOS_EN_TIENDA_POR_NOMBRE_ARTICULO
+            = "select "
             + "nombre,categoria,precio,proveedor,precio,existencias"
             + " FROM Articulo INNE JOIN TiendaTieneArticulo"
             + " ON nombre = nombreArticulo AND proveedor = nombreProveedor "
             + "Where nombreTienda = ? "
             + "AND nombre = ?";
-              
-       
-    private static final String SQL_SELECT_ARTICULOS_EN_TIENDA_POR_CATEGORIA=
-            
-            "select "
+
+    private static final String SQL_SELECT_ARTICULOS_EN_TIENDA_POR_CATEGORIA
+            = "select "
             + "nombre,categoria,precio,proveedor,precio,existencias"
             + " FROM Articulo INNE JOIN TiendaTieneArticulo"
             + " ON nombre = nombreArticulo AND proveedor = nombreProveedor "
             + "Where nombreTienda = ? "
             + "AND categoria = ?";
-    
-        
-    private static final String SQL_SELECT_ARTICULOS_EN_TIENDA_POR_NOMBRE_Y_CATEGORIA=
-            
-            "select "
+
+    private static final String SQL_SELECT_ARTICULOS_EN_TIENDA_POR_NOMBRE_Y_CATEGORIA
+            = "select "
             + "nombre,categoria,precio,proveedor,precio,existencias"
             + " FROM Articulo INNE JOIN TiendaTieneArticulo"
             + " ON nombre = nombreArticulo AND proveedor = nombreProveedor "
             + "Where nombreTienda = ? "
             + "AND nombre = ?"
             + "AND categoria = ?";
-        
-    private static final String SQL_SELECT_ARTICULOS_EN_TIENDA_POR_NOMBRE_Y_PROVEEDOR=
-            
-            "select "
+
+    private static final String SQL_SELECT_ARTICULOS_EN_TIENDA_POR_NOMBRE_Y_PROVEEDOR
+            = "select "
             + "nombre,categoria,precio,proveedor,precio,existencias"
             + " FROM Articulo INNE JOIN TiendaTieneArticulo"
             + " ON nombre = nombreArticulo AND proveedor = nombreProveedor "
             + "Where nombreTienda = ? "
             + "AND nombre = ?"
             + "AND proveedor = ?";
-        
-    private static final String SQL_SELECT_ARTICULOS_EN_TIENDA_POR_PROVEEDOR_Y_CATEGORIA=
-            
-            "select "
+
+    private static final String SQL_SELECT_ARTICULOS_EN_TIENDA_POR_PROVEEDOR_Y_CATEGORIA
+            = "select "
             + "nombre,categoria,precio,proveedor,precio,existencias"
             + " FROM Articulo INNE JOIN TiendaTieneArticulo"
             + " ON nombre = nombreArticulo AND proveedor = nombreProveedor "
             + "Where nombreTienda = ? "
             + "AND proveedor = ?"
             + "AND categoria = ?";
-    
-    
-    
-    
-    
-    private static final String SQL_SELECT =
-        "SELECT "
-        + "categoria, proveedor, nombre, precio "
-        + "FROM Articulo WHERE "
-        + "proveedor = ? AND nombre = ?";
+
+    private static final String SQL_SELECT
+            = "SELECT "
+            + "categoria, proveedor, nombre, precio "
+            + "FROM Articulo WHERE "
+            + "proveedor = ? AND nombre = ?";
 
     /* SQL to update data */
-    private static final String SQL_UPDATE =
-        "UPDATE Articulo SET "
-        + "categoria = ?, precio = ? "
-        + "WHERE "
-        + "proveedor = ? AND nombre = ?";
+    private static final String SQL_UPDATE
+            = "UPDATE Articulo SET "
+            + "categoria = ?, precio = ? "
+            + "WHERE "
+            + "proveedor = ? AND nombre = ?";
 
     /* SQL to delete data */
-    private static final String SQL_DELETE =
-        "DELETE FROM Articulo WHERE "
-        + "proveedor = ? AND nombre = ?";
+    private static final String SQL_DELETE
+            = "DELETE FROM Articulo WHERE "
+            + "proveedor = ? AND nombre = ?";
 
     /**
      * Create a new record in Database.
-     * @param bean   The Object to be inserted.
-     * @param conn   JDBC Connection.
-     * @return 
-     * @exception    SQLException if something is wrong.
+     *
+     * @param bean The Object to be inserted.
+     * @param conn JDBC Connection.
+     * @return
+     * @exception SQLException if something is wrong.
      */
- /*   public void create(Articulo bean, Connection conn) throws SQLException {
+    /*   public void create(Articulo bean, Connection conn) throws SQLException {
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(SQL_INSERT);
@@ -160,8 +143,7 @@ public class ArticuloDAOImpl {
      * @param conn      JDBC Connection.
      * @exception       SQLException if something is wrong.
      */
-    
-   /*     
+ /*     
     public List load(String argumento,int campo,Connection conn) throws SQLException {
         
         PreparedStatement ps = null;
@@ -201,7 +183,7 @@ public class ArticuloDAOImpl {
             close(ps);
         }
     }
-    */
+     */
     //[0],[nombre],[provedor],[categoria],[nombre,proveedor],[nombre,categoria],[proveedor,categoria],[nombre,proveedor,categoria]
 /*
         public List load(String tienda,String argumento1,String argumento2,int combinacion,Connection conn) throws SQLException {
@@ -246,39 +228,33 @@ public class ArticuloDAOImpl {
     }
     
     
-*/
-    
-    public static ArrayList<Articulo> load() throws SQLException {
+     */
+    public static ArrayList<Articulo> load() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
-        try {
-            
-            Connection myConn;
-            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ligadeamericano?autoReconnect=true&useSSL=false", "root", "manolito130");
-            ps = myConn.prepareStatement(SQL_SELECT_ARTICULOS);
-            
-            rs = ps.executeQuery();
-            ArrayList<Articulo>results = getResults(rs);
-            if (results.size() > 0){
-                                JOptionPane.showMessageDialog(null, "RETORNANDO VALORES");
-                return results;
-            }
 
-            else
-                
+        try {
+
+            ps = Conexion.crearConexion().prepareStatement(SQL_SELECT_ARTICULOS);
+            rs = ps.executeQuery();
+            ArrayList<Articulo> results = getResults(rs);
+            if (results.size() > 0) {
+
+                return results;
+            } else {
                 return null;
-        }
-        
-        
-        finally {
+            }
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        } finally {
             close(rs);
             close(ps);
         }
+
+        return null;
     }
 
-    
-   
     public Articulo load(ArticuloKey key, Connection conn) throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -288,11 +264,12 @@ public class ArticuloDAOImpl {
             ps.setString(2, key.getNombre());
             rs = ps.executeQuery();
             List results = getResults(rs);
-            if (results.size() > 0)
+            if (results.size() > 0) {
                 return (Articulo) results.get(0);
-            else
+            } else {
                 return null;
-        }finally {
+            }
+        } finally {
             close(rs);
             close(ps);
         }
@@ -300,9 +277,10 @@ public class ArticuloDAOImpl {
 
     /**
      * Update a record in Database.
-     * @param bean   The Object to be saved.
-     * @param conn   JDBC Connection.
-     * @exception    SQLException if something is wrong.
+     *
+     * @param bean The Object to be saved.
+     * @param conn JDBC Connection.
+     * @exception SQLException if something is wrong.
      */
     public void update(Articulo bean, Connection conn) throws SQLException {
         PreparedStatement ps = null;
@@ -313,16 +291,17 @@ public class ArticuloDAOImpl {
             ps.setString(3, bean.getProveedor());
             ps.setString(4, bean.getNombre());
             ps.executeUpdate();
-        }finally {
+        } finally {
             close(ps);
         }
     }
 
     /**
      * Create a new record in Database.
-     * @param bean   The PK Object to be deleted.
-     * @param conn   JDBC Connection.
-     * @exception    SQLException if something is wrong.
+     *
+     * @param bean The PK Object to be deleted.
+     * @param conn JDBC Connection.
+     * @exception SQLException if something is wrong.
      */
     public void delete(ArticuloKey key, Connection conn) throws SQLException {
         PreparedStatement ps = null;
@@ -331,30 +310,30 @@ public class ArticuloDAOImpl {
             ps.setString(1, key.getProveedor());
             ps.setString(2, key.getNombre());
             ps.executeUpdate();
-        }finally {
+        } finally {
             close(ps);
         }
     }
-    
+
     /**
      * Populate the ResultSet.
-     * @param rs     The ResultSet.
-     * @return       The Object to retrieve from DB.
-     * @exception    SQLException if something is wrong.
+     *
+     * @param rs The ResultSet.
+     * @return The Object to retrieve from DB.
+     * @exception SQLException if something is wrong.
      */
-    private static  ArrayList<Articulo> getResults(ResultSet rs) throws SQLException {
+    private static ArrayList<Articulo> getResults(ResultSet rs) throws SQLException {
         ArrayList<Articulo> results = new ArrayList<Articulo>();
         while (rs.next()) {
-            
-            
-            Articulo bean  = new Articulo();
+
+            Articulo bean = new Articulo();
             bean.setCategoria(rs.getString("categoria"));
             bean.setNombre((rs.getString("nombre")));
             bean.setProveedor(rs.getString("proveedor"));
             bean.setPrecio(rs.getFloat("precio"));
             bean.setImagen(rs.getString("imagen"));
             bean.setExistencias(rs.getInt("existencias"));
-            
+
             results.add(bean);
         }
         return results;
@@ -362,25 +341,29 @@ public class ArticuloDAOImpl {
 
     /**
      * Close JDBC Statement.
-     * @param stmt  Statement to be closed.
+     *
+     * @param stmt Statement to be closed.
      */
     protected static void close(Statement stmt) {
         if (stmt != null) {
             try {
                 stmt.close();
-            }catch(SQLException e){}
+            } catch (SQLException e) {
+            }
         }
     }
 
     /**
      * Close JDBC ResultSet.
-     * @param rs  ResultSet to be closed.
+     *
+     * @param rs ResultSet to be closed.
      */
     protected static void close(ResultSet rs) {
         if (rs != null) {
             try {
                 rs.close();
-            }catch(SQLException e){}
+            } catch (SQLException e) {
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ public class Conexion {
 
         Connection myConn = null;
         try {
-
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
             myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ligadeamericano?autoReconnect=true&useSSL=false", "root", "manolito130");
             if (myConn != null) {
                 System.out.println("CONNECTION SUCCES!!!");
