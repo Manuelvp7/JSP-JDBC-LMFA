@@ -195,7 +195,7 @@ label{
 		}
 	</style>
 
-<form method="post" action="pagina.php" autocomplete="off">
+<form method="post" action="pieChart.jsp" autocomplete="off">
 
 
 		
