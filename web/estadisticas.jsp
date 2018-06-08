@@ -32,6 +32,11 @@
         <script>
             new WOW().init();
         </script>
+        <script language="Javascript">
+            function refreshpage(){
+            document.forms.form1.submit();
+            }
+        </script>
         <!--//FACEBOOKTIMELINE-->
         <!--//animation-effect-->
         <!--start-smooth-scrolling-->
@@ -196,8 +201,7 @@
                             display: inline-block;
                         }
                     </style>
-
-                    <form method="post" action="pieChart.jsp" autocomplete="off">
+                    <form id="form1">
 
 
 
@@ -206,10 +210,11 @@
                         <center>
                             <input type="submit">	
                         </center>
-                    </form>
-
-
-
+                        
+                    </form>                 
+                    <img src="GraficaServlet" width="600" height="400" border="0"/>
+                        <input type="button" onclick="refreshpage()" value="Refresh"/>
+                    
                 </div>
             </div>
 
