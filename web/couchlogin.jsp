@@ -202,7 +202,7 @@
                         }
                     </style>
 
-                    <form method="get" action="LoginControlServlet.java" autocomplete="off">
+                    <form method="post" action="LoginControlServlet" autocomplete="off">
 
 
 

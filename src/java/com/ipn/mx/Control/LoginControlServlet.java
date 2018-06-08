@@ -71,10 +71,8 @@ public class LoginControlServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
-        
-        
-        try {
+                        
+            try {
             String user = request.getParameter("nombre");
             String pass = request.getParameter("password");
             
@@ -84,20 +82,25 @@ public class LoginControlServlet extends HttpServlet {
             unUsuario = unUsuarioDAOImpl.LoadUsuario(user, pass, Conexion.crearConexion());
 
             if(unUsuario!=null){
-                
                 HttpSession session = request.getSession();
                 session.setAttribute("usuario", unUsuario); 
                 out.println("USUARIO: "+ unUsuario);
                 System.out.println("USUARIO "+ unUsuario.getNombreusuario());
-                String url = "/index.jsp";
-                
-                response.sendRedirect(url);
+                String url = "/TableroDeCoach.jsp";
+                RequestDispatcher unRequestDispatcher = request.getRequestDispatcher(url);
+                unRequestDispatcher.forward(request, response);
+//                response.sendRedirect(url);
             }
 
         } catch (SQLException ex) {
             out.println("JAJAJAJAJAJAJAJAJAJAJAJA");
             Logger.getLogger(LoginControlServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
+        
+        
+
         
         
         
@@ -114,7 +117,11 @@ public class LoginControlServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        
+
+        
+        
     }
 
     /**

@@ -9,6 +9,7 @@ package com.ipn.mx.DAO;
 
 import com.ipn.mx.Modelo.UsuarioKey;
 import com.ipn.mx.Modelo.Usuario;
+import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -197,6 +198,7 @@ public class UsuarioDAOImpl {
         while (rs.next()) {
             
             results[0]=(rs.getString("CURP"));
+           out.println("me lleva la verga"+String.valueOf(results[0]));
             results[1]=(rs.getString("nombre"));
             results[2]=(rs.getString("paterno"));
             results[3]=(rs.getString("nombreUsuario"));
