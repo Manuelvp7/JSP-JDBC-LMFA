@@ -71,15 +71,29 @@ public class LoginControlServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-                        
-            try {
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //processRequest(request, response);
+                try {
             String user = request.getParameter("nombre");
-            String pass = request.getParameter("password");
+            String pass = request.getParameter("pasword");
             
-            out.println("USER: "+user);
+            
             Usuario unUsuario = new Usuario();
             unUsuarioDAOImpl = new UsuarioDAOImpl();
             unUsuario = unUsuarioDAOImpl.LoadUsuario(user, pass, Conexion.crearConexion());
+            out.println("USER EN EL SERVLET: "+unUsuario.getNombreusuario());
 
             if(unUsuario!=null){
                 HttpSession session = request.getSession();
@@ -96,29 +110,6 @@ public class LoginControlServlet extends HttpServlet {
             out.println("JAJAJAJAJAJAJAJAJAJAJAJA");
             Logger.getLogger(LoginControlServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
-        
-
-        
-        
-        
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //processRequest(request, response);
-        
 
         
         

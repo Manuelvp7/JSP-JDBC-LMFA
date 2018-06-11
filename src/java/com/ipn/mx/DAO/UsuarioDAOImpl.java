@@ -94,6 +94,7 @@ public class UsuarioDAOImpl {
             ps = conn.prepareStatement(SQL_LOG);
             ps.setString(1, username);
             ps.setString(2, pass);
+            out.println("USEER EN EL DAO "+username+" PASS "+pass);
             rs = ps.executeQuery();
             Object[] results = getResultsLog(rs);
             if (results!=null){
