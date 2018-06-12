@@ -9,48 +9,36 @@ import com.ipn.mx.Conexiones.Conexion;
 import com.ipn.mx.DAO.EquipoDAOImpl;
 import com.ipn.mx.DAO.PartidoDAOImpl;
 import com.ipn.mx.DAO.RecorddeequipoDAOImpl;
-import com.ipn.mx.DAO.UsuarioDAOImpl;
 import com.ipn.mx.Modelo.Equipo;
-import com.ipn.mx.Modelo.Partido;
 import com.ipn.mx.Modelo.Recorddeequipo;
+
 import com.ipn.mx.Modelo.Usuario;
-import com.ipn.mx.Modelo.UsuarioKey;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import com.ipn.mx.Modelo.Partido;
+import com.ipn.mx.Modelo.RecorddeequipoKey;
 
 /**
  *
  * @author manuel
  */
-@WebServlet(name = "LoginControlServlet", urlPatterns = {"/LoginControlServlet"})
-public class LoginControlServlet extends HttpServlet {
-
-    private UsuarioDAOImpl unUsuarioDAOImpl;
-    private List tablaDePosiciones;
-    private List tablaDeResultados;
-    private List proximosPartidos;
-
-    private String url;
-
-    private Equipo equipoCoach;
-    private Usuario unUsuario;
+@WebServlet(name = "TableroCoachServlet", urlPatterns = {"/TableroCoachServlet"})
+public class TableroCoachServlet extends HttpServlet {
 
     private RecorddeequipoDAOImpl unRecorddeequipoDAOImpl;
     private PartidoDAOImpl unPartidoDAOImpl;
+    private Equipo equipoCoach;
     private EquipoDAOImpl unEquipoDAOImpl;
+    private Usuario unUsuario;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -69,10 +57,10 @@ public class LoginControlServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginControlServlet</title>");
+            out.println("<title>Servlet TableroCoachServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginControlServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet TableroCoachServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -90,7 +78,40 @@ public class LoginControlServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
+        HttpSession session = request.getSession();
+        List tablaDePosiciones = new ArrayList<Recorddeequipo>();
+        List tablaDeResultados = new ArrayList<Partido>();
+        List proximosPartidos = new ArrayList<Partido>();
+        
+        
+        try {
+            unUsuario = (Usuario)session.getAttribute("usuario");
+            
+            
+            equipoCoach = new Equipo();
+            
+            
+            
+            
+            equipoCoach = unEquipoDAOImpl.loadEquipoCoach(unUsuario.getCurp(), Conexion.crearConexion());
+            
+            proximosPartidos = unPartidoDAOImpl.loadProximosPartidos("2017",equipoCoach.getNombre(), Conexion.crearConexion());
+            tablaDePosiciones = unRecorddeequipoDAOImpl.load("2017",Conexion.crearConexion());
+            tablaDeResultados = unPartidoDAOImpl.loadResultados("2017", equipoCoach.getNombre(), Conexion.crearConexion());
+            
+            session.setAttribute("equipo", equipoCoach);
+            session.setAttribute("tablaDePosiciones", tablaDePosiciones);
+            session.setAttribute("proximosPartidos",proximosPartidos);
+            session.setAttribute("tablaDeResultados", tablaDeResultados);
+            
+            
+            
+            
+        } catch (Exception e) {
+        }
+        
+        
     }
 
     /**
@@ -104,38 +125,17 @@ public class LoginControlServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        try {
-            String user = request.getParameter("nombre");
-            String pass = request.getParameter("pasword");
+        
 
-            unUsuario = unUsuarioDAOImpl.LoadUsuario(user, pass, Conexion.crearConexion());
+    }
 
-            if (unUsuario != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("usuario", unUsuario);
-
-                equipoCoach = unEquipoDAOImpl.loadEquipoCoach(unUsuario.getCurp(), Conexion.crearConexion());
-
-                proximosPartidos = unPartidoDAOImpl.loadProximosPartidos("2017", equipoCoach.getNombre(), Conexion.crearConexion());
-                tablaDePosiciones = unRecorddeequipoDAOImpl.load("2017", Conexion.crearConexion());
-                tablaDeResultados = unPartidoDAOImpl.loadResultados("2017", equipoCoach.getNombre(), Conexion.crearConexion());
-
-                session.setAttribute("equipo", equipoCoach);
-                session.setAttribute("tablaDePosiciones", tablaDePosiciones);
-                session.setAttribute("proximosPartidos", proximosPartidos);
-                session.setAttribute("tablaDeResultados", tablaDeResultados);
-
-                RequestDispatcher unRequestDispatcher = request.getRequestDispatcher(url);
-                unRequestDispatcher.forward(request, response);
-
-            }
-
-        } catch (SQLException ex) {
-            out.println("JAJAJAJAJAJAJAJAJAJAJAJA");
-            Logger.getLogger(LoginControlServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+    @Override
+    public void init() throws ServletException {
+        super.init(); //To change body of generated methods, choose Tools | Templates.
+        unRecorddeequipoDAOImpl = new RecorddeequipoDAOImpl();
+        unPartidoDAOImpl = new PartidoDAOImpl();
+        unEquipoDAOImpl = new EquipoDAOImpl();
+        
     }
 
     /**
@@ -147,24 +147,5 @@ public class LoginControlServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    @Override
-    public void init() throws ServletException {
-        super.init(); //To change body of generated methods, choose Tools | Templates.
-
-        unUsuario = new Usuario();
-        url = "/TableroDeCoach.jsp";
-        equipoCoach = new Equipo();
-
-        tablaDePosiciones = new ArrayList<Recorddeequipo>();
-        tablaDeResultados = new ArrayList<Partido>();
-        proximosPartidos = new ArrayList<Partido>();
-
-        unUsuarioDAOImpl = new UsuarioDAOImpl();
-        unRecorddeequipoDAOImpl = new RecorddeequipoDAOImpl();
-        unPartidoDAOImpl = new PartidoDAOImpl();
-        unEquipoDAOImpl = new EquipoDAOImpl();
-
-    }
 
 }
