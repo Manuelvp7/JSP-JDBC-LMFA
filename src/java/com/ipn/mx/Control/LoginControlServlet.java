@@ -114,9 +114,13 @@ public class LoginControlServlet extends HttpServlet {
             if (unUsuario != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("usuario", unUsuario);
+                
+                out.println("UN USUARIO DE PRUEBA "+unUsuario.toString());
 
                 equipoCoach = unEquipoDAOImpl.loadEquipoCoach(unUsuario.getCurp(), Conexion.crearConexion());
 
+                out.println("EQUIPO  "+ equipoCoach.toString());
+                
                 proximosPartidos = unPartidoDAOImpl.loadProximosPartidos("2017", equipoCoach.getNombre(), Conexion.crearConexion());
                 tablaDePosiciones = unRecorddeequipoDAOImpl.load("2017", Conexion.crearConexion());
                 tablaDeResultados = unPartidoDAOImpl.loadResultados("2017", equipoCoach.getNombre(), Conexion.crearConexion());

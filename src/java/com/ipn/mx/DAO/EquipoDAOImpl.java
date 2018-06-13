@@ -9,6 +9,7 @@ package com.ipn.mx.DAO;
 
 import com.ipn.mx.Modelo.EquipoKey;
 import com.ipn.mx.Modelo.Equipo;
+import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,7 +46,7 @@ public class EquipoDAOImpl{
         "SELECT "
         + "nombre, propietarioCURP, coachCURP, estadio "
         + "FROM Equipo WHERE "
-        + "coachCURP = ?";
+        + "coachCURP like ?";
 
     /* SQL to update data */
     private static final String SQL_UPDATE =
@@ -92,9 +93,11 @@ public class EquipoDAOImpl{
         try {
             ps = conn.prepareStatement(SQL_SELECT_EQUIPO_COACH);
             ps.setString(1, coachCURP);
+            out.println("QUERY "+ps.toString());
             rs = ps.executeQuery();
             List results = getResults(rs);
             if (results.size() > 0){
+                
                 return (Equipo) results.get(0);
             }
                 
