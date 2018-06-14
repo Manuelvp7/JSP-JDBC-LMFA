@@ -1,7 +1,7 @@
 <%-- 
-    Document   : TableroDeCoach
-    Created on : Jun 7, 2018, 9:40:32 PM
-    Author     : manuel
+    Document   : administrarequipo
+    Created on : 14/06/2018, 06:01:14 PM
+    Author     : mikeni
 --%>
 
 <%@page import="com.ipn.mx.Modelo.Partido"%>
@@ -126,172 +126,15 @@
 	<div class="new">
 		<div class="container">
 			<div class="title-info wow fadeInUp animated" data-wow-delay=".5s">
-<%
-            Usuario unUsuario;
-            List tablaDePosiciones = new ArrayList<Recorddeequipo>();
-            List tablaDeResultados = new ArrayList<Partido>();
-            List proximosPartidos = new ArrayList<Partido>();
 
-            String nombre = null;
-            try {
-                unUsuario = (Usuario) session.getAttribute("usuario");
-                
-                            
-               tablaDePosiciones = (ArrayList<Recorddeequipo>)session.getAttribute("tablaDePosiciones");
-               tablaDeResultados = (ArrayList<Partido>)session.getAttribute("proximosPartidos");
-               proximosPartidos = (ArrayList<Partido>)session.getAttribute("tablaDeResultados");
-                nombre = unUsuario.getNombreusuario();
-
-            } catch (Exception e) {
-            }
-        %>
-				<h3 class="title"><span>Bienvenido <%=nombre%></span></h3>
+				<h3 class="title"><span></span></h3>
 				
 			</div>
 		</div>
 	</div>
-<div class="clearfix"> </div>
-<div class="address1"><!--address-->
-    <div class="container">
-        <div class="address1-row">
-
-
-            <div class="col-md-6 address-left">
-                <div class="address-info wow fadeInRight animated" data-wow-delay=".5s">
-                    <style>
-
-                        label{
-                            width: 150px;
-                            display: inline-block;
-                        }
-                    </style>
-    
-        <form method="post" action="TableroCoachServlet" autocomplete="off">
-
-            <table>
-                <thead>TABLA DE POSICIONES</thead>
-                <tr>
-                    <td>
-                        EQUIPO
-                    </td>
-                
-                    <td>
-                        G
-                    </td>
-                
-                
-                    <td>
-                        P
-                    </td>
-                
-                
-                    <td>
-                        E
-                    </td>
-
-                </tr>
-                
-                <%for (Object record : tablaDePosiciones) {
-                        Recorddeequipo unRecorddeequipo = (Recorddeequipo)record;
-                        
-                        %>
-                
-                                <tr>
-                    <td>
-                        <%=unRecorddeequipo.getNombreequipo()%>
-                    </td>
-                
-                    <td>
-                        <%=unRecorddeequipo.getPartidosganados()%>
-                    </td>
-                
-                
-                    <td>
-                        <%=unRecorddeequipo.getPartidosperdidos()%>
-                    </td>
-                
-                
-                    <td>
-                        <%=unRecorddeequipo.getPartidosempatados()%>
-                    </td>
-                
-                
-                    
-                </tr>
-                
-                <%
-                    }
-                %>
-                
-               
-            </table>
-                
-                            <table>
-                <thead>PROXIMAS FECHAS</thead>
-                <tr>
-                    <td>
-                        FECHA
-                    </td>
-                                        <td>
-                        HORA
-                    </td>
-                
-                    <td>
-                        LOCAL
-                    </td>
-                
-                
-                    <td>
-                        VISITANTE
-                    </td>
-                
-
-                </tr>
-                
-                <%for (Object record : proximosPartidos) {
-                        Partido proximoPartido = (Partido)record;
-                        
-                        
-                        
-                        %>
-                
-                                <tr>
-                    <td>
-                        <%= proximoPartido.getFecha().toString()%>
-                    </td>
-                
-                    <td>
-                        <%=proximoPartido.getHora().toString()%>
-                    </td>
-                
-                
-                    <td>
-                        <%=proximoPartido.getEquipolocal()%>
-                    </td>
-                
-                
-                    <td>
-                        <%=proximoPartido.getEquipovisitante()%>
-                    </td>
-                
-                
-                    
-                </tr>
-                
-                <%
-                    }
-                %>
-                
-                
-            </table>
-
-        </form>
-                           </div>
-            </div>
-
-        </div>	
-    </div>	
-</div>
+        
+    METELATABLAAQUI
+        
  <div class="clearfix"> </div>
 
 		
