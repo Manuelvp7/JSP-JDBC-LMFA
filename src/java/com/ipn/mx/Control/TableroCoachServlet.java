@@ -7,9 +7,11 @@ package com.ipn.mx.Control;
 
 import com.ipn.mx.Conexiones.Conexion;
 import com.ipn.mx.DAO.EquipoDAOImpl;
+import com.ipn.mx.DAO.JugadorDAOImpl;
 import com.ipn.mx.DAO.PartidoDAOImpl;
 import com.ipn.mx.DAO.RecorddeequipoDAOImpl;
 import com.ipn.mx.Modelo.Equipo;
+import com.ipn.mx.Modelo.Jugador;
 import com.ipn.mx.Modelo.Recorddeequipo;
 
 import com.ipn.mx.Modelo.Usuario;
@@ -26,6 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.ipn.mx.Modelo.Partido;
 import com.ipn.mx.Modelo.RecorddeequipoKey;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -34,12 +39,9 @@ import com.ipn.mx.Modelo.RecorddeequipoKey;
 @WebServlet(name = "TableroCoachServlet", urlPatterns = {"/TableroCoachServlet"})
 public class TableroCoachServlet extends HttpServlet {
 
-    private RecorddeequipoDAOImpl unRecorddeequipoDAOImpl;
-    private PartidoDAOImpl unPartidoDAOImpl;
-    private Equipo equipoCoach;
-    private EquipoDAOImpl unEquipoDAOImpl;
-    private Usuario unUsuario;
-
+    private JugadorDAOImpl unJugadorDAOImpl;
+    private Equipo unEquipo;
+private ArrayList<Jugador> jugadores;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -75,45 +77,6 @@ public class TableroCoachServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        HttpSession session = request.getSession();
-        List tablaDePosiciones = new ArrayList<Recorddeequipo>();
-        List tablaDeResultados = new ArrayList<Partido>();
-        List proximosPartidos = new ArrayList<Partido>();
-        
-        
-        try {
-            unUsuario = (Usuario)session.getAttribute("usuario");
-            
-            
-            equipoCoach = new Equipo();
-            
-            
-            
-            
-            equipoCoach = unEquipoDAOImpl.loadEquipoCoach(unUsuario.getCurp(), Conexion.crearConexion());
-            
-            proximosPartidos = unPartidoDAOImpl.loadProximosPartidos("2017",equipoCoach.getNombre(), Conexion.crearConexion());
-            tablaDePosiciones = unRecorddeequipoDAOImpl.load("2017",Conexion.crearConexion());
-            tablaDeResultados = unPartidoDAOImpl.loadResultados("2017", equipoCoach.getNombre(), Conexion.crearConexion());
-            
-            session.setAttribute("equipo", equipoCoach);
-            session.setAttribute("tablaDePosiciones", tablaDePosiciones);
-            session.setAttribute("proximosPartidos",proximosPartidos);
-            session.setAttribute("tablaDeResultados", tablaDeResultados);
-            
-            
-            
-            
-        } catch (Exception e) {
-        }
-        
-        
-    }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -125,16 +88,31 @@ public class TableroCoachServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
 
+        HttpSession session = request.getSession();
+        unEquipo =(Equipo) session.getAttribute("equipo");
+        try {
+            
+            switch(request.getParameter(name)){
+                
+            }
+            
+            
+            
+            
+            jugadores = (ArrayList<Jugador>) unJugadorDAOImpl.load(unEquipo.getNombre(), Conexion.crearConexion());
+            session.setAttribute("tablaDeJugadores", jugadores);
+        } catch (SQLException ex) {
+            Logger.getLogger(TableroCoachServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
     }
 
     @Override
     public void init() throws ServletException {
         super.init(); //To change body of generated methods, choose Tools | Templates.
-        unRecorddeequipoDAOImpl = new RecorddeequipoDAOImpl();
-        unPartidoDAOImpl = new PartidoDAOImpl();
-        unEquipoDAOImpl = new EquipoDAOImpl();
+        unJugadorDAOImpl = new JugadorDAOImpl();
         
     }
 
