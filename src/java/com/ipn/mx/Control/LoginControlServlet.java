@@ -10,6 +10,7 @@ import com.ipn.mx.DAO.EquipoDAOImpl;
 import com.ipn.mx.DAO.PartidoDAOImpl;
 import com.ipn.mx.DAO.RecorddeequipoDAOImpl;
 import com.ipn.mx.DAO.UsuarioDAOImpl;
+import com.ipn.mx.Modelo.EnviarMail;
 import com.ipn.mx.Modelo.Equipo;
 import com.ipn.mx.Modelo.Partido;
 import com.ipn.mx.Modelo.Recorddeequipo;
@@ -131,6 +132,11 @@ public class LoginControlServlet extends HttpServlet {
                 session.setAttribute("tablaDeResultados", tablaDeResultados);
 
                 RequestDispatcher unRequestDispatcher = request.getRequestDispatcher(url);
+                EnviarMail e = new EnviarMail();
+                String correoDestinario = "fasolmarti@gmail.com";
+                String asunto = "Inicio de sesión LMFA";
+                String texto = "Has iniciado sesión satisfactoriamente.";
+                e.metodo(correoDestinario, asunto, texto);
                 unRequestDispatcher.forward(request, response);
 
             }

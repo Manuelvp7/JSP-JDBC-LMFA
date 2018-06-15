@@ -19,6 +19,9 @@ public class Usuario implements java.io.Serializable, Cloneable {
     /* nombreUsuario, PK */
     protected String nombreusuario;
 
+    /* coreo */
+    protected String correo;
+    
     /* contrasena */
     protected String contrasena;
 
@@ -34,6 +37,11 @@ public class Usuario implements java.io.Serializable, Cloneable {
     public String getCurp() {
         return curp;
     }
+    
+    public String getCorreo() {
+        return correo;
+    }
+
 
     /* CURP, PK */
     public void setCurp(String curp) {
@@ -102,7 +110,14 @@ public class Usuario implements java.io.Serializable, Cloneable {
         }
         else if (!this.contrasena.equals(bean.contrasena)) 
             return false;
-
+        
+        if (this.correo == null) {
+            if (bean.correo != null)
+                return false;
+        }
+        else if (!this.correo.equals(bean.correo)) 
+            return false;
+        
         if (this.categoriausuario == null) {
             if (bean.categoriausuario != null)
                 return false;
@@ -121,6 +136,7 @@ public class Usuario implements java.io.Serializable, Cloneable {
         bean.nombreusuario = this.nombreusuario;
         bean.contrasena = this.contrasena;
         bean.categoriausuario = this.categoriausuario;
+        bean.correo = this.correo;
         return bean;
     }
 

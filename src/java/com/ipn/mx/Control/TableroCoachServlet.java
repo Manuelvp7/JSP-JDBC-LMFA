@@ -93,9 +93,6 @@ private ArrayList<Jugador> jugadores;
         unEquipo =(Equipo) session.getAttribute("equipo");
         try {
             
-            switch(request.getParameter(name)){
-                
-            }
             
             
             
