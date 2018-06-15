@@ -209,7 +209,7 @@
                         <input type="text" placeholder="Nombre" name="nombre" id="nombre" required="">
                         <br>
 
-                        <input type="text" placeholder="Password" name="pasword" id="pasword" required="">
+                        <input type="password" placeholder="Password" name="pasword" id="pasword" required="" >
                         <br>
 
                         <input type="submit">
